@@ -1,38 +1,25 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Barstool Boxscores
 
-## Getting Started
+This is a code code challenge repo for [this code challenge](https://github.com/BarstoolSports/fullstack-challenge). It uses Next.js to stand up a simple API and frontend that interacts with a couple external JSON files that are included in the base challenge repo.
 
-First, run the development server:
+## Architecture / Tools Used
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+### Typescript
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+The shape of the external JSON files are modeled with Typescript interfaces for easy static code analysis. Interfaces are stored in a `/models` folder while types are defined closer to the reason they exist.
 
-You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
+### Providers
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
+React's Context API is used to create a `BoxscoreProvider` that acts as a data component for the UI scoreboards. It watches the `query` parameter that Next's `useRouter` provides and loads the correct data based on the incoming query.
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+### Dynamic Routes
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+Next's dynamic routing is used for both the API routes and front end routes. This allows for easily passing in variables to ensure that the correct data is fetched for the particular dataset.
 
-## Learn More
+### SCSS Modules
 
-To learn more about Next.js, take a look at the following resources:
+CSS Modules allow for easy, modular SCSS imports with access via `styles` objects in my components.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### MongoDB
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+MongoDB is used to cache the data from the external API.
