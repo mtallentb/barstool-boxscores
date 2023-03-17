@@ -4,13 +4,22 @@ This is a code code challenge repo for [this code challenge](https://github.com/
 
 ## Getting Started
 
-```
-yarn dev
-```
+### Set up Environment Variables
 
-or
+Set the following environment variables in `.env.local`:
 
 ```
+NEXT_MONGO_URI=${YOUR_MONGO_DB_URI}
+NEXT_MONGO_DATABASE=boxscores
+NEXT_MONGO_NBA_COLLECTION=nba
+NEXT_MONGO_MLB_COLLECTION=mlb
+```
+
+### Build and Run Project
+
+```
+yarn
+yarn build
 yarn start
 ```
 
