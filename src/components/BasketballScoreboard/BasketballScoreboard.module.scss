@@ -63,14 +63,22 @@
           justify-content: center;
           text-transform: uppercase;
 
-          &:first-of-type {
-            background: red;
+          &:first-of-type,
+          &:last-of-type {
             color: white;
           }
 
-          &:last-of-type {
-            background: blue;
-            color: white;
+          // Define new team colors in colors.scss and add them to this map.
+          // The keys represent classNames (ex. styles.miamiHeat)
+          $teamColors: (
+            "miamiHeat": --heat-red,
+            "okcThunder": --thunder-blue,
+          );
+
+          @each $team, $color in $teamColors {
+            &.#{$team} {
+              background: var(#{$color});
+            }
           }
         }
       }

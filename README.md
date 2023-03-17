@@ -2,6 +2,18 @@
 
 This is a code code challenge repo for [this code challenge](https://github.com/BarstoolSports/fullstack-challenge). It uses Next.js to stand up a simple API and frontend that interacts with a couple external JSON files that are included in the base challenge repo.
 
+## Getting Started
+
+```
+yarn dev
+```
+
+or
+
+```
+yarn start
+```
+
 ## Architecture / Tools Used
 
 ### Typescript

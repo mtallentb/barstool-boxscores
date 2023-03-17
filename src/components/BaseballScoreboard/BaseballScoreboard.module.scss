@@ -62,6 +62,30 @@
         }
       }
 
+      &.pitchersRow {
+        border-top: 1px solid var(--grey-200);
+        grid-template-columns: repeat(3, 1fr);
+
+        th {
+          background: var(--grey-100);
+          padding: 0.5rem 1rem;
+          text-align: left;
+        }
+
+        td {
+          padding: 0.5rem 1rem;
+
+          p {
+            margin: 0;
+            font-weight: bold;
+          }
+
+          span {
+            font-size: 0.8em;
+          }
+        }
+      }
+
       &.teamsRow {
         border-top: 1px solid var(--grey-200);
         grid-template-columns: 5fr 2fr 5fr;
@@ -73,14 +97,22 @@
           justify-content: center;
           text-transform: uppercase;
 
-          &:first-of-type {
-            background: red;
+          &:first-of-type,
+          &:last-of-type {
             color: white;
           }
 
-          &:last-of-type {
-            background: blue;
-            color: white;
+          // Define new team colors in colors.scss and add them to this map.
+          // The keys represent classNames (ex. styles.miamiHeat)
+          $teamColors: (
+            "laAngels": --angels-red,
+            "seattleMariners": --mariners-blue,
+          );
+
+          @each $team, $color in $teamColors {
+            &.#{$team} {
+              background: var(#{$color});
+            }
           }
         }
       }

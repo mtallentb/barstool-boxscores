@@ -28,21 +28,26 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   // so we need to declare what boxscore will be cached
   let boxscoreToBeCached;
 
-  // If this is our first boxscore fetch,
-  // hit the Barstool API, cache the data and return it in response
-  if (!cachedBoxscore) {
-    console.log("Fetching new boxscore data...");
-    boxscoreToBeCached = await fetchLatestBoxscore(apiUrl);
-  } else if (shouldRefreshBoxscore(cachedBoxscore)) {
-    // If refresh is needed, hit the Barstool API and cache in DB
-    console.log("Cache has expired. Refreshing data...");
-    boxscoreToBeCached = await fetchLatestBoxscore(apiUrl);
-  } else {
-    // We have fetched more than once in a 15 second window so use the cached data
-    console.log("Fetching active cache...");
-    boxscoreToBeCached = cachedBoxscore;
-  }
+  try {
+    // If this is our first boxscore fetch,
+    // hit the Barstool API, cache the data and return it in response
+    if (!cachedBoxscore) {
+      console.log("Fetching new boxscore data...");
+      boxscoreToBeCached = await fetchLatestBoxscore(apiUrl);
+    } else if (shouldRefreshBoxscore(cachedBoxscore)) {
+      // If refresh is needed, hit the Barstool API and cache in DB
+      console.log("Cache has expired. Refreshing data...");
+      boxscoreToBeCached = await fetchLatestBoxscore(apiUrl);
+    } else {
+      // We have fetched more than once in a 15 second window so use the cached data
+      console.log("Fetching active cache...");
+      boxscoreToBeCached = cachedBoxscore;
+    }
 
-  await cacheBoxscore(cacheCollection, boxscoreToBeCached);
-  res.status(200).json(boxscoreToBeCached);
+    await cacheBoxscore(cacheCollection, boxscoreToBeCached);
+    res.status(200).json(boxscoreToBeCached);
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "An error occurred while fetching boxscores" });
+  }
 }

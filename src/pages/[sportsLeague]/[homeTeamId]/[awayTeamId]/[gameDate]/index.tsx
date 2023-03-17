@@ -5,7 +5,7 @@ import styles from "@/styles/pages/boxscores.module.scss";
 import { BaseballScoreboard, BasketballScoreboard } from "@/components";
 import Head from "next/head";
 
-type tScoreboardsDict = {
+type tScoreboards = {
   [key: string]: ReactNode;
 };
 
@@ -14,17 +14,17 @@ export default function BoxscoresPage() {
   const { sportsLeague } = query;
   const scoreboard = useMemo(() => {
     if (!sportsLeague) return null;
-    const scoreboards: tScoreboardsDict = {
+    const scoreboards: tScoreboards = {
       mlb: <BaseballScoreboard />,
       nba: <BasketballScoreboard />,
     };
-    return scoreboards[sportsLeague as keyof tScoreboardsDict];
+    return scoreboards[sportsLeague as keyof tScoreboards];
   }, [sportsLeague]);
 
   return (
     <>
       <Head>
-        <title>{sportsLeague?.toString().toUpperCase()} Barstool Boxscores</title>
+        <title>Barstool Boxscores</title>
       </Head>
       <BoxscoreProvider>
         <div className={styles.boxscores}>{scoreboard}</div>

@@ -52,7 +52,6 @@ export function shouldRefreshBoxscore(cachedBoxscore: Boxscore) {
   if (!cachedBoxscore?.last_checked) return true;
   const lastCheckedTimestampInSeconds = Math.floor(new Date(cachedBoxscore.last_checked).getTime() / 1000);
   const currentTimestampInSeconds = Math.floor(Date.now() / 1000);
-  console.log(currentTimestampInSeconds - lastCheckedTimestampInSeconds);
   return currentTimestampInSeconds - lastCheckedTimestampInSeconds >= 15;
 }
 
