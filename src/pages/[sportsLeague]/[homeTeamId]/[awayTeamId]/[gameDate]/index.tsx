@@ -4,6 +4,7 @@ import { ReactNode, useMemo } from "react";
 import styles from "@/styles/pages/boxscores.module.scss";
 import { BaseballScoreboard, BasketballScoreboard } from "@/components";
 import Head from "next/head";
+import BaseLayout from "@/layouts/BaseLayout/BaseLayout";
 
 type tScoreboards = {
   [key: string]: ReactNode;
@@ -22,13 +23,10 @@ export default function BoxscoresPage() {
   }, [sportsLeague]);
 
   return (
-    <>
-      <Head>
-        <title>Barstool Boxscores</title>
-      </Head>
-      <BoxscoreProvider>
+    <BoxscoreProvider>
+      <BaseLayout>
         <div className={styles.boxscores}>{scoreboard}</div>
-      </BoxscoreProvider>
-    </>
+      </BaseLayout>
+    </BoxscoreProvider>
   );
 }

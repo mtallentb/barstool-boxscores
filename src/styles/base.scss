@@ -2,28 +2,34 @@
 
 $background-color: var(--thunder-blue);
 
-main {
-  align-items: center;
-  display: flex;
-  justify-content: center;
+body {
+  margin: 0;
 
-  ul {
-    list-style: none;
+  main {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    margin: 0;
+    padding: 0;
 
-    li {
-      a {
-        background: $background-color;
-        display: inline-flex;
-        margin: 2rem;
-        padding: 2rem;
-        width: auto;
-        color: white;
-        font-family: Verdana, Geneva, Tahoma, sans-serif;
-        text-decoration: none;
-        text-transform: uppercase;
+    ul {
+      list-style: none;
 
-        &:hover {
-          background: darken(#007ac1, 25%);
+      li {
+        a {
+          background: $background-color;
+          display: inline-flex;
+          margin: 2rem;
+          padding: 2rem;
+          width: auto;
+          color: white;
+          font-family: Verdana, Geneva, Tahoma, sans-serif;
+          text-decoration: none;
+          text-transform: uppercase;
+
+          &:hover {
+            background: darken(#007ac1, 25%);
+          }
         }
       }
     }

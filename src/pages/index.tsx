@@ -1,7 +1,13 @@
 import Head from "next/head";
 import Link from "next/link";
+import Router from "next/router";
+import { useEffect } from "react";
 
 export default function IndexPage() {
+  useEffect(() => {
+    Router.push("/nba/miami-heat/oklahoma-city-thunder/2012-06-21");
+  }, []);
+
   return (
     <>
       <Head>

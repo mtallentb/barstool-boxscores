@@ -21,7 +21,7 @@ export default function BaseballScoreboard() {
   }, [boxscoreData]);
 
   const pitchers = useMemo(() => {
-    if (!boxscoreData) return null;
+    if (!boxscoreData || boxscoreData?.league !== "MLB") return null;
     return [
       getWinningPitcher(boxscoreData as MLBBoxscore),
       getLosingPitcher(boxscoreData as MLBBoxscore),
@@ -39,7 +39,7 @@ export default function BaseballScoreboard() {
   }
 
   return (
-    (boxscoreData && (
+    (boxscoreData && boxscoreData.league === "MLB" && (
       <table className={styles.scoreboard}>
         <thead>
           <tr>

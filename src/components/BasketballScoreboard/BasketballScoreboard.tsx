@@ -56,7 +56,7 @@ export default function BasketballScoreboard() {
   }
 
   return (
-    (boxscoreData && (
+    (boxscoreData && boxscoreData?.league === "NBA" && (
       <table className={styles.scoreboard}>
         <thead>
           <tr>
