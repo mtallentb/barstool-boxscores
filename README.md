@@ -82,4 +82,4 @@ CSS Modules allow for easy, modular SCSS imports with access via `styles` object
 
 ### MongoDB
 
-MongoDB is used to cache the data from the external API.
+MongoDB is used to cache the data from the external API. There are purposeful server logs that notify when the API or the cache is getting hit.
