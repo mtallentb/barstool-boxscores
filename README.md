@@ -31,6 +31,13 @@ yarn build
 yarn start
 ```
 
+#### Boxscore Routes
+
+```
+http://localhost:3000/mlb/los-angeles-angels/seattle-mariners/2012-09-26
+http://localhost:3000/nba/miami-heat/oklahoma-city-thunder/2012-06-21
+```
+
 ## Solutions to the Challenge
 
 ### Dynamic Routing Controls What Data is Fetched
@@ -46,13 +53,6 @@ Frontend
 ```
 
 Since the external API is just two JSON files, the Next.js API routes will always return data to the views. However, only the correct dates will actually return the MongoDB cached data. This is an example of how the app would scale with an actual API.
-
-#### Correct URLs
-
-```
-http://localhost:3000/mlb/los-angeles-angels/seattle-mariners/2012-09-26
-http://localhost:3000/nba/miami-heat/oklahoma-city-thunder/2012-06-21
-```
 
 ### Cacheing Handled Server-side
 
