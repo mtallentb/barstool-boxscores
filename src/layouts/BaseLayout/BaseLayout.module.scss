@@ -10,7 +10,7 @@
     justify-content: space-between;
     padding: 2rem;
     width: 100%;
-    background: var(--grey-100);
+    background: black;
 
     h2 {
       font-family: Verdana, Geneva, Tahoma, sans-serif;
@@ -27,8 +27,8 @@
           padding: 0 0 0 1rem;
 
           a {
-            color: white;
-            background: black;
+            color: black;
+            background: white;
             border-radius: 5px;
             font-family: Verdana, Geneva, Tahoma, sans-serif;
             font-size: 14px;
@@ -36,10 +36,9 @@
             text-decoration: none;
             padding: 1rem;
 
-            &:hover,
-            &:focus,
-            &:focus-visible {
-              background: darkblue;
+            &:hover {
+              background: var(--angels-red);
+              color: white;
             }
           }
         }

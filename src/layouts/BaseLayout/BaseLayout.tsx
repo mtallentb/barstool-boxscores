@@ -1,6 +1,7 @@
 import styles from "./BaseLayout.module.scss";
 import Head from "next/head";
 import Link from "next/link";
+import Image from "next/image";
 import { ReactNode } from "react";
 
 type tProps = { children: ReactNode };
@@ -12,7 +13,7 @@ export default function BaseLayout({ children }: tProps) {
       </Head>
       <div className={styles.baseLayout}>
         <header>
-          <h2>Barstool Boxscores</h2>
+          <Image alt="Barstool Sport Logo" src="/barstool-logo-white.png" width="300" height="114" />
           <nav>
             <ul>
               <li>
