@@ -2,6 +2,7 @@ import styles from "./BasketballScoreboard.module.scss";
 import { useBoxscoreData } from "@/providers/Boxscore/Boxscore.provider";
 import { NBABoxscore } from "@/models";
 import { useMemo } from "react";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 export default function BasketballScoreboard() {
   const boxscoreData = useBoxscoreData();
@@ -55,49 +56,51 @@ export default function BasketballScoreboard() {
   }
 
   return (
-    <table className={styles.scoreboard}>
-      <thead>
-        <tr>
-          {scoreboardHeaders.map((value, index) => (
-            <th scope="col" key={index}>
-              {value}
-            </th>
-          ))}
-        </tr>
-      </thead>
-      <tbody>
-        {/* HOME STAT LINE */}
-        <tr className={styles.statsRow}>
-          <th scope="row">{boxscoreData?.home_team?.abbreviation}</th>
-          {boxscoreData?.home_period_scores?.map((score, index) => (
-            <td key={index}>{score}</td>
-          ))}
-          <td>{getHomePointsTotal(boxscoreData as NBABoxscore)}</td>
-        </tr>
+    (boxscoreData && (
+      <table className={styles.scoreboard}>
+        <thead>
+          <tr>
+            {scoreboardHeaders.map((value, index) => (
+              <th scope="col" key={index}>
+                {value}
+              </th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {/* HOME STAT LINE */}
+          <tr className={styles.statsRow}>
+            <th scope="row">{boxscoreData?.home_team?.abbreviation}</th>
+            {boxscoreData?.home_period_scores?.map((score, index) => (
+              <td key={index}>{score}</td>
+            ))}
+            <td>{getHomePointsTotal(boxscoreData as NBABoxscore)}</td>
+          </tr>
 
-        {/* AWAY STAT LINE */}
-        <tr className={styles.statsRow}>
-          <th>{boxscoreData?.away_team?.abbreviation}</th>
-          {boxscoreData?.away_period_scores?.map((score, index) => (
-            <td key={index}>{score}</td>
-          ))}
-          <td>{getAwayPointsTotal(boxscoreData as NBABoxscore)}</td>
-        </tr>
+          {/* AWAY STAT LINE */}
+          <tr className={styles.statsRow}>
+            <th>{boxscoreData?.away_team?.abbreviation}</th>
+            {boxscoreData?.away_period_scores?.map((score, index) => (
+              <td key={index}>{score}</td>
+            ))}
+            <td>{getAwayPointsTotal(boxscoreData as NBABoxscore)}</td>
+          </tr>
 
-        {/* TEAMS AND PERIOD */}
-        <tr className={styles.teamsRow}>
-          <td className={getTeamColor(boxscoreData?.home_team?.team_id)}>
-            <h3>{boxscoreData?.home_team?.last_name}</h3>
-          </td>
-          <td>
-            <span>{currentFormattedPeriod}</span>
-          </td>
-          <td className={getTeamColor(boxscoreData?.away_team?.team_id)}>
-            <h3>{boxscoreData?.away_team?.last_name}</h3>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          {/* TEAMS AND PERIOD */}
+          <tr className={styles.teamsRow}>
+            <td className={getTeamColor(boxscoreData?.home_team?.team_id)}>
+              <h3>{boxscoreData?.home_team?.last_name}</h3>
+            </td>
+            <td>
+              <span>{currentFormattedPeriod}</span>
+            </td>
+            <td className={getTeamColor(boxscoreData?.away_team?.team_id)}>
+              <h3>{boxscoreData?.away_team?.last_name}</h3>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    )) || <LoadingSpinner />
   );
 }
 

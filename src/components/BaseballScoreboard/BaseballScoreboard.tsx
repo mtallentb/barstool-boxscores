@@ -2,6 +2,7 @@ import styles from "./BaseballScoreboard.module.scss";
 import { useBoxscoreData } from "@/providers/Boxscore/Boxscore.provider";
 import { MLBBoxscore } from "@/models";
 import { useMemo } from "react";
+import LoadingSpinner from "../LoadingSpinner/LoadingSpinner";
 
 export default function BaseballScoreboard() {
   const boxscoreData = useBoxscoreData();
@@ -38,83 +39,85 @@ export default function BaseballScoreboard() {
   }
 
   return (
-    <table className={styles.scoreboard}>
-      <thead>
-        <tr>
-          <th scope="col"></th>
-          {gameState?.innings.map((num) => (
-            <th scope="col" key={num}>
-              {num}
-            </th>
-          ))}
-          <th scope="col">R</th>
-          <th scope="col">H</th>
-          <th scope="col">E</th>
-        </tr>
-      </thead>
-      <tbody>
-        {/* HOME STAT LINE */}
-        <tr className={styles.statsRow}>
-          <th scope="row">{boxscoreData?.home_team?.abbreviation}</th>
-          {boxscoreData?.home_period_scores?.map((score, index) => (
-            <td key={index}>{score}</td>
-          ))}
-          <td>{getHomeTeamRuns(boxscoreData as MLBBoxscore)}</td>
-          <td>{getHomeTeamHits(boxscoreData as MLBBoxscore)}</td>
-          <td>{getHomeTeamErrors(boxscoreData as MLBBoxscore)}</td>
-        </tr>
+    (boxscoreData && (
+      <table className={styles.scoreboard}>
+        <thead>
+          <tr>
+            <th scope="col"></th>
+            {gameState?.innings.map((num) => (
+              <th scope="col" key={num}>
+                {num}
+              </th>
+            ))}
+            <th scope="col">R</th>
+            <th scope="col">H</th>
+            <th scope="col">E</th>
+          </tr>
+        </thead>
+        <tbody>
+          {/* HOME STAT LINE */}
+          <tr className={styles.statsRow}>
+            <th scope="row">{boxscoreData?.home_team?.abbreviation}</th>
+            {boxscoreData?.home_period_scores?.map((score, index) => (
+              <td key={index}>{score}</td>
+            ))}
+            <td>{getHomeTeamRuns(boxscoreData as MLBBoxscore)}</td>
+            <td>{getHomeTeamHits(boxscoreData as MLBBoxscore)}</td>
+            <td>{getHomeTeamErrors(boxscoreData as MLBBoxscore)}</td>
+          </tr>
 
-        {/* AWAY STAT LINE */}
-        <tr className={styles.statsRow}>
-          <th>{boxscoreData?.away_team?.abbreviation}</th>
-          {boxscoreData?.away_period_scores?.map((score, index) => (
-            <td key={index}>{score}</td>
-          ))}
-          <td>{getAwayTeamRuns(boxscoreData as MLBBoxscore)}</td>
-          <td>{getAwayTeamHits(boxscoreData as MLBBoxscore)}</td>
-          <td>{getAwayTeamErrors(boxscoreData as MLBBoxscore)}</td>
-        </tr>
+          {/* AWAY STAT LINE */}
+          <tr className={styles.statsRow}>
+            <th>{boxscoreData?.away_team?.abbreviation}</th>
+            {boxscoreData?.away_period_scores?.map((score, index) => (
+              <td key={index}>{score}</td>
+            ))}
+            <td>{getAwayTeamRuns(boxscoreData as MLBBoxscore)}</td>
+            <td>{getAwayTeamHits(boxscoreData as MLBBoxscore)}</td>
+            <td>{getAwayTeamErrors(boxscoreData as MLBBoxscore)}</td>
+          </tr>
 
-        {/* PITCHERS */}
-        <tr className={styles.pitchersRow}>
-          <th>WIN</th>
-          <th>LOSS</th>
-          <th>SAVE</th>
-        </tr>
-        <tr className={styles.pitchersRow}>
-          {pitchers?.map(
-            (pitcher, index) =>
-              pitcher && (
-                <td key={index}>
-                  <p>{pitcher.display_name}</p>
-                  <span>
-                    {pitcher.innings_pitched} IP | {pitcher.earned_runs} ER | {pitcher.strike_outs} K | {pitcher.walks}{" "}
-                    BB
-                  </span>
-                </td>
-              )
-          )}
-        </tr>
-
-        {/* TEAMS AND PERIOD */}
-        <tr className={styles.teamsRow}>
-          <td className={getTeamColor(boxscoreData?.home_team?.team_id)}>
-            <h3>{boxscoreData?.home_team?.last_name}</h3>
-          </td>
-          <td>
-            {(boxscoreData?.event_information?.status === "completed" && <span>Final</span>) || (
-              <>
-                <span>{gameState?.inningHalf}</span>
-                <span>{gameState?.currentInning}</span>
-              </>
+          {/* PITCHERS */}
+          <tr className={styles.pitchersRow}>
+            <th>WIN</th>
+            <th>LOSS</th>
+            <th>SAVE</th>
+          </tr>
+          <tr className={styles.pitchersRow}>
+            {pitchers?.map(
+              (pitcher, index) =>
+                pitcher && (
+                  <td key={index}>
+                    <p>{pitcher.display_name}</p>
+                    <span>
+                      {pitcher.innings_pitched} IP | {pitcher.earned_runs} ER | {pitcher.strike_outs} K |{" "}
+                      {pitcher.walks} BB
+                    </span>
+                  </td>
+                )
             )}
-          </td>
-          <td className={getTeamColor(boxscoreData?.away_team?.team_id)}>
-            <h3>{boxscoreData?.away_team?.last_name}</h3>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+          </tr>
+
+          {/* TEAMS AND PERIOD */}
+          <tr className={styles.teamsRow}>
+            <td className={getTeamColor(boxscoreData?.home_team?.team_id)}>
+              <h3>{boxscoreData?.home_team?.last_name}</h3>
+            </td>
+            <td>
+              {(boxscoreData?.event_information?.status === "completed" && <span>Final</span>) || (
+                <>
+                  <span>{gameState?.inningHalf}</span>
+                  <span>{gameState?.currentInning}</span>
+                </>
+              )}
+            </td>
+            <td className={getTeamColor(boxscoreData?.away_team?.team_id)}>
+              <h3>{boxscoreData?.away_team?.last_name}</h3>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    )) || <LoadingSpinner />
   );
 }
 
